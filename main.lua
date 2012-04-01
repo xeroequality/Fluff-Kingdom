@@ -58,12 +58,18 @@ end
 button1:addEventListener("touch", activateButton)
 
 
-local function onTouch(event)
-	local t = event.target
+local function moveScreen(event)
+	local target = event.target
+	local phase = event.phase
 	
-	t.x = event.x
-	t.y = event.y
+	if phase == 'began' then
+		deltaX = event.x - target.x
+		deltaY = event.y - target.y	
+	elseif phase == 'moved' then
+		target.x = event.x - deltaX
+		target.y = event.y - deltaY
+	end
 	return true
 end
 
-playScreen:addEventListener('touch', onTouch)
+playScreen:addEventListener('touch', moveScreen)
