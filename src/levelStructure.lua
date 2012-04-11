@@ -21,29 +21,46 @@ function scene:createScene( event )
 				-- Assign color based on level layout
 				if (grid1[i][j] == 1) then
 					grid[i][j] = display.newImage("images/tile.png")
+					grid[i][j].walkable = 1
 					grid[i][j]:setFillColor(0, 255, 0)
+					print('tHeight: ' .. grid[i][j].height)
+					print('tWidth: ' .. grid[i][j].width)
 				elseif (grid1[i][j] == 2) then
 					grid[i][j] = display.newImage("images/tile.png")
+					grid[i][j].walkable = 0
 					grid[i][j]:setFillColor(0, 0, 255)
 				elseif (grid1[i][j] == 3) then
 					grid[i][j] = display.newImage("images/building_blue_tile.png")
-				else
-					grid[i][j]:setFillColor(255, 0, 0)
+					grid[i][j].walkable = 0
+				-- else
+					-- grid[i][j]:setFillColor(255, 0, 0)
 				end
 				-- Position the grid tiles to mesh together correctly
-				tHeight = grid[i][j].height
-				tWidth = grid[i][j].width
-				grid[i][j].x = tWidth/2*(i-1) + tWidth/2*(j-1)
-				grid[i][j].y = display.contentHeight / 2 - tHeight/2*(j-1) + tHeight/2*(i-1)
+				-- tHeight = grid[i][j].height
+				-- tWidth = grid[i][j].width
+				grid[i][j].x = grid[i][j].width/2*(i-1) + grid[i][j].width/2*(j-1)
+				grid[i][j].y = display.contentHeight / 2 - grid[i][j].height/2*(j-1) + grid[i][j].height/2*(i-1)
 				playScreen:insert(grid[i][j])
 			end
 		end
+
 		playScreen:setReferencePoint(display.CenterReferencePoint)
 		playScreen.x = display.contentWidth / 2
 		playScreen.y = display.contentHeight / 2
+		return grid
 	end
-	makeGrid()
+	local playScreenGrid = makeGrid()
 
+-- This can be used to add something to the grid after it has been created.
+		local i = 3
+		local j = 3
+		playScreenGrid[i][j] = display.newImage("images/building_blue_tile.png")
+		playScreenGrid[i][j].walkable = 0
+		playScreenGrid[i][j].x = playScreenGrid[i][j].width/2*(i-1) + playScreenGrid[i][j].width/2*(j-1)
+		playScreenGrid[i][j].y = display.contentHeight / 2 - playScreenGrid[i][j].height/2*(j-1) + playScreenGrid[i][j].height/2*(i-1)
+		playScreen:insert(playScreenGrid[i][j])
+	
+	
 	-- playScreen.x = display.contentWidth + grid[1][1].width
 	playScreen.alpha = 0
 		local deltaX = 0
