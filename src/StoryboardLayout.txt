@@ -1,8 +1,0 @@
-main.lua
-    -- intially loaded .lua
-
-  splash.lua
-      -- splash screen, display logo
-
-    levelStructure.lua
-	-- Layout for all levels
